@@ -140,18 +140,32 @@ ensure_port_available() {
 stop_process_group() {
     local pid="$1"
     local label="$2"
+    local launcher_pgid=""
+    local shell_pgid=""
+    local target="$pid"
     [ -z "$pid" ] && return
-    if kill -0 -- "-$pid" 2>/dev/null || kill -0 "$pid" 2>/dev/null; then
-        kill -TERM -- "-$pid" 2>/dev/null || kill -TERM "$pid" 2>/dev/null || true
+
+    # Background jobs normally get their own process group after `set -m`.
+    # Resolve that group instead of assuming the launcher PID is always the PGID.
+    # Never signal the setup.sh process group: doing so could interrupt cleanup
+    # before Uvicorn/Next children have exited.
+    launcher_pgid="$(ps -o pgid= -p "$pid" 2>/dev/null | tr -d '[:space:]' || true)"
+    shell_pgid="$(ps -o pgid= -p "$$" 2>/dev/null | tr -d '[:space:]' || true)"
+    if [ -n "$launcher_pgid" ] && [ "$launcher_pgid" != "$shell_pgid" ]; then
+        target="-$launcher_pgid"
+    fi
+
+    if kill -0 -- "$target" 2>/dev/null || kill -0 "$pid" 2>/dev/null; then
+        kill -TERM -- "$target" 2>/dev/null || kill -TERM "$pid" 2>/dev/null || true
         for _ in $(seq 1 20); do
-            if ! kill -0 -- "-$pid" 2>/dev/null && ! kill -0 "$pid" 2>/dev/null; then
+            if ! kill -0 -- "$target" 2>/dev/null && ! kill -0 "$pid" 2>/dev/null; then
                 break
             fi
             sleep 0.1
         done
-        if kill -0 -- "-$pid" 2>/dev/null || kill -0 "$pid" 2>/dev/null; then
+        if kill -0 -- "$target" 2>/dev/null || kill -0 "$pid" 2>/dev/null; then
             warn "$label did not stop gracefully; forcing shutdown"
-            kill -KILL -- "-$pid" 2>/dev/null || kill -KILL "$pid" 2>/dev/null || true
+            kill -KILL -- "$target" 2>/dev/null || kill -KILL "$pid" 2>/dev/null || true
         fi
         wait "$pid" 2>/dev/null || true
     fi
@@ -165,12 +179,17 @@ cleanup() {
     printf "\n${DIM}Returning the expedition to base...${RESET}\n"
     stop_process_group "$FRONTEND_PID" "Frontend"
     stop_process_group "$BACKEND_PID" "Backend"
+    FRONTEND_PID=""
+    BACKEND_PID=""
     ok "All services stopped"
 }
 
 handle_signal() {
-    trap - INT TERM
+    # A second Ctrl+C during teardown must not abort cleanup and leave the
+    # backend orphaned. Ignore signals until both service groups are stopped.
+    trap '' INT TERM
     cleanup
+    trap - EXIT INT TERM
     exit 130
 }
 
@@ -199,8 +218,16 @@ done
 if [ "$MODE" = "terminal" ]; then
     printf "\n${ICE}  ◆ Terminal sonar online${RESET}\n"
     printf "  ${DIM}Press Ctrl+C at any time to cancel and surface.${RESET}\n\n"
-    uv run --frozen python terminal_gui.py
-    exit $?
+    # Keep `set -e` from bypassing cleanup when the terminal client exits
+    # with 130 after Ctrl+C.
+    if uv run --frozen python terminal_gui.py; then
+        EXIT_CODE=0
+    else
+        EXIT_CODE=$?
+    fi
+    cleanup
+    trap - EXIT INT TERM
+    exit "$EXIT_CODE"
 fi
 
 ensure_port_available 3000 "Frontend"
@@ -229,4 +256,14 @@ elif command -v xdg-open >/dev/null 2>&1; then
     xdg-open http://localhost:3000 2>/dev/null || true
 fi
 
-wait "$FRONTEND_PID"
+# Ctrl+C is commonly delivered to the foreground Next.js process first.
+# `wait` then returns 130; handle that status explicitly so `set -e` cannot
+# exit setup.sh before it terminates the separate backend process group.
+if wait "$FRONTEND_PID"; then
+    EXIT_CODE=0
+else
+    EXIT_CODE=$?
+fi
+cleanup
+trap - EXIT INT TERM
+exit "$EXIT_CODE"
