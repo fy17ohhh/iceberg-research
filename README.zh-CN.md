@@ -20,21 +20,23 @@ Sonar       # 验证证据，发现缺口与冗余
 Synthesizer # 撰写基于证据的最终报告
 ```
 
+## 主要技术栈
+
+- FastAPI · SSE · MCP · 多智能体编排
+- RAG · BM25 + 向量检索 + Reciprocal Rank Fusion (RRF) ranking · Qdrant
+- 多轮搜索 · 网页抓取 · arXiv 检索 · 证据审查 · 引用溯源
+- Next.js · React · TypeScript · Tailwind CSS · Docker · uv
+
 ## 功能特性
 
-- 在执行前通过澄清步骤对齐研究需求的多智能体研究闭环
-- 将问题拆分为子问题，并依据 Sonar 反馈迭代重规划
-- Brave 与 Tavily 双搜索源及回退策略
-- 通过 arXiv、论文检索工具和 MCP 集成发现学术资料
-- 基于已导入文档和缓存搜索的本地 RAG 知识检索
-- 面向用户偏好和研究事实的长期记忆
-- 独立 Sonar 阶段，用于检查证据质量、缺失维度和内容冗余
-- Synthesizer 负责引用规范化、来源清理与最终 Markdown 报告生成
-- 可导入 PDF、Markdown、文本和已保存研究报告的本地文档库
-- FastAPI 后端通过 SSE 向前端流式推送研究进度
-- Next.js 前端，提供研究流程、报告渲染、记忆和文档库体验
+- 在执行前通过澄清步骤对齐研究需求的多智能体研究闭环，将问题拆分为子问题，并依据 Agent反馈迭代重规划
+- Brave 与 Tavily 双搜索源及回退策略；通过 arXiv、论文检索工具和 MCP 集成发现学术资料
+- 可导入 PDF、Markdown、文本和已保存研究报告的本地文档库；基于已导入文档和缓存搜索的本地 RAG 知识检索
+- 面向用户偏好和研究事实的长期记忆管理
+- 独立审查阶段（Sonar）用于检查证据质量、缺失维度和内容冗余；Synthesizer 负责引用规范化、来源清理与最终 Markdown 报告生成
+- FastAPI 后端通过 SSE 向前端流式推送研究进度；Next.js 前端，提供研究流程、报告渲染、记忆和文档库体验
 - 通过 OpenAI 兼容客户端和模型前缀自动识别，灵活支持多种模型提供商
-- 网页左下角可切换 English / 简体中文；终端界面可通过 `--lang` 切换语言
+- 支持English / 简体中文
 
 ## 🚀 快速开始
 

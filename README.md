@@ -20,19 +20,21 @@ Sonar      # verify evidence, detect gaps and redundancy
 Synthesizer # write the final grounded report
 ```
 
+## Main Tech Stack
+
+- FastAPI · SSE · MCP · Multi-Agent Orchestration
+- RAG · BM25 + Vector Retrieval + Reciprocal Rank Fusion (RRF) ranking · Qdrant
+- Iterative Search · Web Fetching · arXiv Retrieval · Evidence Review · Citation Traceability
+- Next.js · React · TypeScript · Tailwind CSS · Docker · uv
+
 ## Features
 
-- Multi-agent research loop with a clarification step before execution
-- Research planning with sub-question decomposition and iterative re-planning based on Sonar feedback
-- Web search with Brave and Tavily fallback
-- Paper and academic discovery via arXiv / search tools / MCP integrations
-- RAG-based local knowledge retrieval over ingested documents and cached searches
-- Long-term memory for user preferences and research facts
-- Independent Sonar stage for evidence quality, missing dimensions, and redundancy checks
-- Final markdown report generation through Synthesizer with citation normalization and source cleanup
-- Local library for ingesting PDFs, markdown, text, and saved research reports
-- FastAPI backend with SSE streaming events for frontend progress updates
-- Next.js frontend for research workflows, report rendering, and memory/library UX
+- Multi-agent research loop with a clarification step before execution, research planning with sub-question decomposition and iterative re-planning based on Sonar feedback
+- Web search with Brave and Tavily fallback; Paper and academic discovery via arXiv / search tools / MCP integrations
+- Local library for ingesting PDFs, markdown, text, and saved research reports; RAG-based local knowledge retrieval over ingested documents and cached searches
+- Long-term memory management for user preferences and research facts
+- Independent reviewing stage (Sonar) for evidence quality, missing dimensions, and redundancy checks; Final markdown report generation through Synthesizer with citation normalization and source cleanup
+- FastAPI backend with SSE streaming events for frontend progress updates; Next.js frontend for research workflows, report rendering, and memory/library UX
 - Model-provider flexibility via OpenAI-compatible clients and provider auto-detection by model prefix
 
 ## 🚀 Quick start
