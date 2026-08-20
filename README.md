@@ -2,7 +2,7 @@
 
 > Research beyond the surface.
 
-[English](README.md) | [简体中文](README.md)
+[English](README.md) | [简体中文](README.zh-CN.md)
 
 ![home_page](assets/home_page.png)
 
