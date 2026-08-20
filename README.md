@@ -20,14 +20,14 @@ Sonar      # verify evidence, detect gaps and redundancy
 Synthesizer # write the final grounded report
 ```
 
-## Main Tech Stack
+## 📌 Main Tech Stack
 
 - FastAPI · SSE · MCP · Multi-Agent Orchestration
 - RAG · BM25 + Vector Retrieval + Reciprocal Rank Fusion (RRF) ranking · Qdrant
 - Iterative Search · Web Fetching · arXiv Retrieval · Evidence Review · Citation Traceability
 - Next.js · React · TypeScript · Tailwind CSS · Docker · uv
 
-## Features
+## ⭐ Features
 
 - Multi-agent research loop with a clarification step before execution, research planning with sub-question decomposition and iterative re-planning based on Sonar feedback
 - Web search with Brave and Tavily fallback; Paper and academic discovery via arXiv / search tools / MCP integrations
@@ -86,7 +86,7 @@ Delete a document:
 uv run iceberg-library delete "My Paper"
 ```
 
-## API providers
+## 🌐 API providers
 
 The project supports multiple LLM providers via OpenAI-compatible APIs and provider auto-detection by model prefix. The config template is defined in `.env.example`.
 
@@ -146,6 +146,6 @@ Notes:
 - Embeddings can be used for local RAG and hybrid retrieval.
 - Qdrant is optional but strongly recommended for a more durable vector index.
 
-## License
+## ⚖️ License
 
 Code of this project is released under the [MIT License](LICENSE).

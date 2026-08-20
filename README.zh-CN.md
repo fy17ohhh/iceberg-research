@@ -20,14 +20,14 @@ Sonar       # 验证证据，发现缺口与冗余
 Synthesizer # 撰写基于证据的最终报告
 ```
 
-## 主要技术栈
+## 📌 主要技术栈
 
 - FastAPI · SSE · MCP · 多智能体编排
 - RAG · BM25 + 向量检索 + Reciprocal Rank Fusion (RRF) ranking · Qdrant
 - 多轮搜索 · 网页抓取 · arXiv 检索 · 证据审查 · 引用溯源
 - Next.js · React · TypeScript · Tailwind CSS · Docker · uv
 
-## 功能特性
+## ⭐ 功能特性
 
 - 在执行前通过澄清步骤对齐研究需求的多智能体研究闭环，将问题拆分为子问题，并依据 Agent反馈迭代重规划
 - Brave 与 Tavily 双搜索源及回退策略；通过 arXiv、论文检索工具和 MCP 集成发现学术资料
@@ -36,7 +36,6 @@ Synthesizer # 撰写基于证据的最终报告
 - 独立审查阶段（Sonar）用于检查证据质量、缺失维度和内容冗余；Synthesizer 负责引用规范化、来源清理与最终 Markdown 报告生成
 - FastAPI 后端通过 SSE 向前端流式推送研究进度；Next.js 前端，提供研究流程、报告渲染、记忆和文档库体验
 - 通过 OpenAI 兼容客户端和模型前缀自动识别，灵活支持多种模型提供商
-- 支持English / 简体中文
 
 ## 🚀 快速开始
 
@@ -95,7 +94,7 @@ uv run iceberg-library add ./data/originals/my_paper.pdf
 uv run iceberg-library delete "My Paper"
 ```
 
-## API 提供商
+## 🌐 API 提供商
 
 项目通过 OpenAI 兼容 API 及模型前缀自动识别支持多种 LLM 提供商。配置模板见 `.env.example`。
 
@@ -155,6 +154,6 @@ QDRANT_COLLECTION=iceberg_research
 - Embedding 可用于本地 RAG 与混合检索。
 - Qdrant 是可选项，但推荐用于持久化向量索引。
 
-## 许可证
+## ⚖️ 许可证
 
 本项目代码基于 [MIT License](LICENSE) 发布。
