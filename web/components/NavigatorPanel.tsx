@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { analyzeNavigation, refineNavigation } from "@/lib/api";
 import StreamingText from "@/components/StreamingText";
+import { useLanguage } from "@/lib/i18n";
 
 type ChatMsg =
   | { role: "user"; content: string }
@@ -33,13 +34,14 @@ export default function NavigatorPanel({
   query: string;
   onBriefReady: (brief: string) => void;
 }) {
+  const { t } = useLanguage();
   const hit = _navigatorCache?.query === query ? _navigatorCache : null;
 
   const [messages, setMessages] = useState<(ChatMsg & { id: number })[]>(
     () =>
       hit?.messages ?? [
         { id: nextId(), role: "user", content: query.trim() },
-        { id: nextId(), role: "assistant-loading", content: "正在分析问题" },
+        { id: nextId(), role: "assistant-loading", content: t("analyzingQuestion") },
       ],
   );
   const [customInput, setCustomInput] = useState("");
@@ -87,7 +89,7 @@ export default function NavigatorPanel({
         {
           id: nextId(),
           role: "assistant",
-          content: `暂时无法完成问题分析：${detail}`,
+          content: t("analysisFailed", { detail }),
           animate: "word-fade",
         },
       ]);
@@ -132,7 +134,7 @@ export default function NavigatorPanel({
     setMessages((prev) => [
       ...prev,
       { id: userMsgId, role: "user", content: trimmed },
-      { id: loadingMsgId, role: "assistant-loading", content: "收到，正在整理研究方案..." },
+      { id: loadingMsgId, role: "assistant-loading", content: t("refiningPlan") },
     ]);
     refineNavigation(query, trimmed).then((data) => {
       const brief = data.brief?.trim() || trimmed;
@@ -148,7 +150,7 @@ export default function NavigatorPanel({
         {
           id: nextId(),
           role: "assistant",
-          content: `暂时无法整理研究方案：${detail}`,
+          content: t("refineFailed", { detail }),
           animate: "word-fade",
         },
       ]);
@@ -244,7 +246,7 @@ export default function NavigatorPanel({
                             handleSubmit();
                           }
                         }}
-                        placeholder={hasDirections ? "或者输入你的具体方向..." : "输入全称、所属领域或研究目标..."}
+                        placeholder={hasDirections ? t("directionPlaceholder") : t("clarifyPlaceholder")}
                         rows={1}
                         className={`w-full rounded-xl border pl-5 py-3 pr-14 font-mono text-sm placeholder:text-muted-foreground/60 placeholder:font-mono resize-none overflow-hidden focus:outline-none ${
                           inputFlash
@@ -282,7 +284,7 @@ export default function NavigatorPanel({
           return (
             <AssistantMsg key={msg.id}>
               <p className="text-[15px] leading-relaxed">
-                <StreamingText text="好的，研究方向已确认，即将开始研究：" mode="typewriter" onComplete={() => setRevealBrief(true)} />
+                <StreamingText text={t("researchConfirmed")} mode="typewriter" onComplete={() => setRevealBrief(true)} />
               </p>
               {revealBrief && (
                 <p className="text-[15px] leading-relaxed mt-1.5 text-foreground/70">
@@ -330,11 +332,12 @@ function UserBubble({ text }: { text: string }) {
 }
 
 function AssistantMsg({ children }: { children: React.ReactNode }) {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col gap-1.5 bubble-enter">
       <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase text-muted-foreground">
         <span className="w-1.5 h-1.5 rounded-full bg-foreground/70" />
-        Assistant
+        {t("assistant")}
       </div>
       <div>{children}</div>
     </div>

@@ -11,8 +11,10 @@ import {
   type LibraryDoc,
   type LibraryPreview,
 } from "@/lib/api";
+import { useLanguage } from "@/lib/i18n";
 
 export default function LibraryDrawer() {
+  const { locale, t } = useLanguage();
   const [docs, setDocs] = useState<LibraryDoc[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -41,7 +43,7 @@ export default function LibraryDrawer() {
   }
 
   async function removeDoc(title: string) {
-    if (!window.confirm(`Delete “${title}”?`)) return;
+    if (!window.confirm(t("deleteConfirm", { title }))) return;
     await deleteDoc(title);
     setDocs((current) => current.filter((doc) => doc.title !== title));
     if (preview?.title === title) setPreview(null);
@@ -65,9 +67,9 @@ export default function LibraryDrawer() {
 
   return (
     <>
-      <button onClick={() => setOpen(true)} className="floating-control library-control" aria-label="Open library">
+      <button onClick={() => setOpen(true)} className="floating-control library-control" aria-label={t("openLibrary")}>
         <BookIcon />
-        <span>文档库</span>
+        <span>{t("library")}</span>
         {docs.length > 0 && <b>{docs.length}</b>}
       </button>
 
@@ -79,16 +81,16 @@ export default function LibraryDrawer() {
       <aside className={`library-drawer ${open ? "translate-x-0" : "translate-x-full"}`}>
         <header className="flex items-center justify-between border-b border-foreground/10 px-5 py-4">
           <div>
-            <p className="ui-eyebrow">Knowledge dock</p>
-            <h2 className="text-lg font-bold tracking-tight">文献库</h2>
+            <p className="ui-eyebrow">{t("knowledgeDock")}</p>
+            <h2 className="text-lg font-bold tracking-tight">{t("library")}</h2>
           </div>
-          <button onClick={() => setOpen(false)} className="icon-button" aria-label="Close library"><CloseIcon /></button>
+          <button onClick={() => setOpen(false)} className="icon-button" aria-label={t("closeLibrary")}><CloseIcon /></button>
         </header>
 
         <div className="grid min-h-0 flex-1 grid-cols-[minmax(220px,0.82fr)_minmax(0,1.45fr)] max-md:grid-cols-1">
           <div className="thin-scroll overflow-y-auto border-r border-foreground/10 p-3 max-md:border-r-0">
-            {loading && <p className="p-3 text-sm text-muted-foreground">Loading library…</p>}
-            {!loading && docs.length === 0 && <p className="p-3 text-sm text-muted-foreground">No documents yet.</p>}
+            {loading && <p className="p-3 text-sm text-muted-foreground">{t("loadingLibrary")}</p>}
+            {!loading && docs.length === 0 && <p className="p-3 text-sm text-muted-foreground">{t("noDocuments")}</p>}
             <div className="space-y-2">
               {docs.map((doc) => (
                 <article
@@ -101,12 +103,12 @@ export default function LibraryDrawer() {
                 >
                   <div className="min-w-0">
                     <p className="truncate text-[13px] font-semibold">{doc.title}</p>
-                    <p className="mt-1 text-[10px] uppercase tracking-[.12em] text-muted-foreground">{formatSourceType(doc.source_type)}</p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[.12em] text-muted-foreground">{formatSourceType(doc.source_type, locale)}</p>
                   </div>
                   <button
                     onClick={(event) => { event.stopPropagation(); void removeDoc(doc.title); }}
                     className="opacity-0 transition-opacity group-hover:opacity-100 text-muted-foreground hover:text-error"
-                    aria-label={`Delete ${doc.title}`}
+                    aria-label={`${t("deleteDocument")} ${doc.title}`}
                   >
                     <TrashIcon />
                   </button>
@@ -116,14 +118,14 @@ export default function LibraryDrawer() {
           </div>
 
           <div className="thin-scroll min-h-0 overflow-y-auto bg-white/38 p-6">
-            {previewing && <div className="preview-empty"><span className="sonar-loader" />Loading preview…</div>}
+            {previewing && <div className="preview-empty"><span className="sonar-loader" />{t("loadingPreview")}</div>}
             {!previewing && previewError && <div className="preview-empty text-error">{previewError}</div>}
             {!previewing && !preview && !previewError && (
-              <div className="preview-empty"><BookIcon />Select a document to preview</div>
+              <div className="preview-empty"><BookIcon />{t("selectDocument")}</div>
             )}
             {!previewing && preview && (
               <div>
-                <p className="ui-eyebrow">{formatSourceType(preview.source_type)} preview</p>
+                <p className="ui-eyebrow">{formatSourceType(preview.source_type, locale)} {t("preview")}</p>
                 <h3 className="mb-6 mt-1 text-xl font-bold">{preview.title}</h3>
                 <div className="report-prose library-preview">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{preview.content}</ReactMarkdown>
@@ -140,7 +142,7 @@ export default function LibraryDrawer() {
             </p>
           )}
           <button onClick={() => fileRef.current?.click()} disabled={uploading} className="upload-button">
-            {uploading ? "Uploading…" : "+ Add PDF, Markdown or Text"}
+            {uploading ? t("uploading") : t("addDocuments")}
           </button>
           <input ref={fileRef} type="file" className="hidden" accept=".pdf,.md,.txt" multiple onChange={handleUpload} />
         </footer>
@@ -149,10 +151,10 @@ export default function LibraryDrawer() {
   );
 }
 
-function formatSourceType(type: string) {
+function formatSourceType(type: string, locale: "en" | "zh-CN") {
   if (type === "arxiv") return "arXiv";
-  if (type === "report") return "Research report";
-  if (type === "upload") return "Upload";
+  if (type === "report") return locale === "zh-CN" ? "研究报告" : "Research report";
+  if (type === "upload") return locale === "zh-CN" ? "上传文件" : "Upload";
   return type;
 }
 

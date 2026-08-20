@@ -2,7 +2,9 @@
 
 > Research beyond the surface.
 
-![home_page](assets/home_page_zh.png)
+[English](README.md) | [简体中文](README.md)
+
+![home_page](assets/home_page.png)
 
 Iceberg Research is multi-agent deep research project that turns a vague question into a grounded, cited research report. It clarifies the user brief, plans investigation steps, searches across web and papers, checks evidence quality, and synthesizes a final markdown report with citations and source traceability. The central design follows an **"underwater research workflow"**: the visible result is the final report, while the deeper work happens in planning, retrieval, evidence verification, and synthesis.
 

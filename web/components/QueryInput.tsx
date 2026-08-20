@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/lib/i18n";
 
 export default function QueryInput({
   onSubmit,
@@ -9,6 +10,7 @@ export default function QueryInput({
   onSubmit: (query: string) => void;
   disabled?: boolean;
 }) {
+  const { t } = useLanguage();
   const [query, setQuery] = useState("");
 
   function handleSubmit() {
@@ -30,13 +32,14 @@ export default function QueryInput({
             handleSubmit();
           }
         }}
-        placeholder="输入研究问题..."
+        placeholder={t("researchQuestionPlaceholder")}
         rows={3}
         className="research-input w-full rounded-2xl border px-5 py-4 pr-14 text-foreground font-mono placeholder:text-muted-foreground/65 placeholder:font-mono resize-none focus:outline-none transition-all"
       />
       <button
         onClick={handleSubmit}
         disabled={disabled || !query.trim()}
+        aria-label={t("submitResearch")}
         className="launch-button absolute right-2.5 bottom-4 rounded-xl bg-accent p-2.5 text-white hover:bg-accent-hover active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
       >
         <svg

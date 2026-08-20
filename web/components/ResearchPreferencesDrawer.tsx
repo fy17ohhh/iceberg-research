@@ -8,8 +8,10 @@ import {
   saveResearchPreferences,
   type ResearchPreferences,
 } from "@/lib/api";
+import { useLanguage } from "@/lib/i18n";
 
 export default function ResearchPreferencesDrawer() {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [preferences, setPreferences] = useState<ResearchPreferences>(
     DEFAULT_RESEARCH_PREFERENCES,
@@ -60,7 +62,7 @@ export default function ResearchPreferencesDrawer() {
         className="floating-control preferences-control"
       >
         <MemoryIcon />
-        研究偏好
+        {t("preferences")}
       </button>
 
       <div
@@ -77,15 +79,15 @@ export default function ResearchPreferencesDrawer() {
       >
         <header className="flex items-start justify-between px-6 pt-6 pb-4 border-b border-foreground/7">
           <div>
-            <h2 className="text-[16px] font-medium">长期研究偏好</h2>
+            <h2 className="text-[16px] font-medium">{t("longTermPreferences")}</h2>
             <p className="text-[12px] text-muted-foreground mt-1 leading-relaxed">
-              保存后将在相关研究中自动召回，不会重复询问。
+              {t("preferencesDescription")}
             </p>
           </div>
           <button
             onClick={() => setOpen(false)}
             className="p-1 text-muted-foreground hover:text-foreground active:scale-90"
-            aria-label="关闭"
+            aria-label={t("close")}
           >
             <CloseIcon />
           </button>
@@ -93,67 +95,67 @@ export default function ResearchPreferencesDrawer() {
 
         <div className="flex-1 overflow-y-auto thin-scroll px-6 py-5">
           {loading ? (
-            <p className="text-[13px] text-muted-foreground">正在读取记忆...</p>
+            <p className="text-[13px] text-muted-foreground">{t("loadingMemory")}</p>
           ) : (
             <div className="space-y-6">
-              <SettingSection title="报告形式">
+              <SettingSection title={t("reportStyle")}>
                 <SelectRow
-                  label="报告语言"
+                  label={t("reportLanguage")}
                   value={preferences.report_language}
                   onChange={(value) =>
                     update("report_language", value as ResearchPreferences["report_language"])
                   }
                   options={[
-                    ["auto", "跟随问题语言"],
-                    ["zh-CN", "中文"],
-                    ["en", "English"],
+                    ["auto", t("followQuestionLanguage")],
+                    ["zh-CN", t("chineseLanguage")],
+                    ["en", t("english")],
                   ]}
                 />
                 <SelectRow
-                  label="分析深度"
+                  label={t("analysisDepth")}
                   value={preferences.report_depth}
                   onChange={(value) =>
                     update("report_depth", value as ResearchPreferences["report_depth"])
                   }
                   options={[
-                    ["concise", "简洁"],
-                    ["balanced", "平衡"],
-                    ["deep", "深入"],
+                    ["concise", t("concise")],
+                    ["balanced", t("balanced")],
+                    ["deep", t("deep")],
                   ]}
                 />
               </SettingSection>
 
-              <SettingSection title="来源策略">
+              <SettingSection title={t("sourceStrategy")}>
                 <ToggleRow
-                  label="优先一手来源"
-                  description="官方文档、原始报告和数据集"
+                  label={t("preferPrimary")}
+                  description={t("primaryDescription")}
                   checked={preferences.prefer_primary_sources}
                   onChange={(value) => update("prefer_primary_sources", value)}
                 />
                 <ToggleRow
-                  label="优先学术来源"
-                  description="论文、会议和学术资料"
+                  label={t("preferAcademic")}
+                  description={t("academicDescription")}
                   checked={preferences.prefer_academic_sources}
                   onChange={(value) => update("prefer_academic_sources", value)}
                 />
                 <ToggleRow
-                  label="寻找代码实现"
-                  description="相关时补充官方仓库或高质量实现"
+                  label={t("includeCode")}
+                  description={t("codeDescription")}
                   checked={preferences.include_code_repositories}
                   onChange={(value) => update("include_code_repositories", value)}
                 />
               </SettingSection>
 
-              <SettingSection title="证据与细节">
+              <SettingSection title={t("evidenceDetail")}>
                 <ToggleRow
-                  label="包含方法细节"
-                  description="机制、实验设计和关键步骤"
+                  label={t("includeMethodology")}
+                  description={t("methodologyDescription")}
                   checked={preferences.include_methodology}
                   onChange={(value) => update("include_methodology", value)}
                 />
                 <ToggleRow
-                  label="包含量化证据"
-                  description="指标、数据、日期和实验结果"
+                  label={t("includeQuantitative")}
+                  description={t("quantitativeDescription")}
                   checked={preferences.include_quantitative_evidence}
                   onChange={(value) =>
                     update("include_quantitative_evidence", value)
@@ -161,9 +163,9 @@ export default function ResearchPreferencesDrawer() {
                 />
               </SettingSection>
 
-              <SettingSection title="长期研究背景">
+              <SettingSection title={t("researchBackground")}>
                 <p className="text-[12px] text-muted-foreground leading-relaxed mb-2">
-                  填写长期目标、研究方向或知识背景。不要填写 API Key、密码等凭证。
+                  {t("contextDescription")}
                 </p>
                 <textarea
                   rows={5}
@@ -171,14 +173,14 @@ export default function ResearchPreferencesDrawer() {
                   onChange={(event) =>
                     update("research_context", event.target.value)
                   }
-                  placeholder="例如：我正在研究 Iceberg Research Agent，并准备 Agent 算法岗位，希望重点关注方法设计、评测和可靠性。"
+                  placeholder={t("contextPlaceholder")}
                   className="w-full rounded-xl bg-background/55 border border-foreground/12 px-3.5 py-3 text-[13px] leading-relaxed resize-none focus:outline-none focus:border-foreground/30"
                 />
               </SettingSection>
 
               <div className="rounded-xl bg-background/55 border border-foreground/8 px-3.5 py-3">
                 <p className="text-[12px] text-foreground/70 leading-relaxed">
-                  完成的研究会自动提取少量、带来源的原子事实。系统只按当前问题召回相关记忆，不会把全部历史塞进上下文。
+                  {t("memoryDescription")}
                 </p>
               </div>
             </div>
@@ -192,7 +194,7 @@ export default function ResearchPreferencesDrawer() {
             disabled={loading || saving}
             className="w-full rounded-xl bg-accent text-surface py-2.5 text-[13px] font-medium hover:bg-accent-hover active:scale-[0.98] disabled:opacity-50 transition-all"
           >
-            {saving ? "正在写入长期记忆..." : saved ? "已保存" : "保存研究偏好"}
+            {saving ? t("savingPreferences") : saved ? t("preferencesSaved") : t("savePreferences")}
           </button>
         </footer>
       </aside>

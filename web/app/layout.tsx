@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Iceberg Research",
-  description: "自主多 Agent 学术研究系统",
+  description: "A multi-agent deep research system.",
 };
 
 export default function RootLayout({
@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh" className="h-full">
+    <html lang="en" className="h-full">
       <body className="h-full overflow-hidden flex flex-col">{children}</body>
     </html>
   );

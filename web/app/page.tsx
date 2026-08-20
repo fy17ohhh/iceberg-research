@@ -7,8 +7,18 @@ import NavigatorPanel, { resetNavigatorCache } from "@/components/NavigatorPanel
 import ResearchProgress from "@/components/ResearchProgress";
 import ReportView from "@/components/ReportView";
 import ResearchPreferencesDrawer from "@/components/ResearchPreferencesDrawer";
+import { LanguageProvider, LanguageSwitcher, useLanguage } from "@/lib/i18n";
 
 export default function Home() {
+  return (
+    <LanguageProvider>
+      <HomeContent />
+    </LanguageProvider>
+  );
+}
+
+function HomeContent() {
+  const { t } = useLanguage();
   const [stage, setStage] = useState<"input" | "sending" | "navigating" | "researching" | "report">("input");
   const [query, setQuery] = useState("");
   const [brief, setBrief] = useState("");
@@ -108,7 +118,7 @@ export default function Home() {
                   strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
                   <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
-                返回水面
+                {t("returnToSurface")}
               </button>
             </div>
             <div className="pb-8 gap-4 flex flex-col items-center">
@@ -152,10 +162,10 @@ export default function Home() {
             className="w-full max-w-sm rounded-[28px] border border-white/25 bg-slate-950/80 p-6 text-white shadow-2xl shadow-cyan-950/40"
           >
             <h2 id="exit-research-title" className="text-xl font-semibold tracking-tight">
-              退出当前搜索？
+              {t("exitResearch")}
             </h2>
             <p className="mt-2 text-sm leading-6 text-white/65">
-              返回水面会终止当前搜索进度，并清除所有已生成的内容。你可以选择继续搜索或退出。
+              {t("exitDescription")}
             </p>
             <div className="mt-6 flex gap-3">
               <button
@@ -163,19 +173,20 @@ export default function Home() {
                 onClick={() => setShowExitConfirm(false)}
                 className="flex-1 rounded-full border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-medium transition hover:bg-white/20"
               >
-                继续搜索
+                {t("continueResearch")}
               </button>
               <button
                 type="button"
                 onClick={returnToSurface}
                 className="flex-1 rounded-full bg-cyan-300 px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200 active:scale-[0.98]"
               >
-                确认退出
+                {t("confirmExit")}
               </button>
             </div>
           </section>
         </div>
       )}
+      <LanguageSwitcher />
     </main>
   );
 }

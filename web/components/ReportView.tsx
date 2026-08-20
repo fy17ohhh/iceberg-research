@@ -8,6 +8,7 @@ import rehypeRaw from "rehype-raw";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import { saveReport } from "@/lib/api";
+import { useLanguage } from "@/lib/i18n";
 
 interface ReportViewProps {
   report: string;
@@ -91,6 +92,7 @@ function extractTitle(md: string): string {
 }
 
 export default function ReportView({ report, stats }: ReportViewProps) {
+  const { t } = useLanguage();
   const { body, sourcesHeading, sources } = processReport(report);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
 
@@ -137,7 +139,7 @@ export default function ReportView({ report, stats }: ReportViewProps) {
               <polyline points="7 3 7 8 15 8" />
             </svg>
           )}
-          {saveState === "saved" ? "已保存" : saveState === "saving" ? "保存中..." : "保存到文献库"}
+          {saveState === "saved" ? t("saved") : saveState === "saving" ? t("saving") : t("saveToLibrary")}
         </button>
         <button
           onClick={handlePrint}
@@ -148,7 +150,7 @@ export default function ReportView({ report, stats }: ReportViewProps) {
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v6M5 10h14a2 2 0 0 1 2 2v3H3v-3a2 2 0 0 1 2-2z" />
             <circle cx="12" cy="15" r="1" />
           </svg>
-          打印 PDF
+          {t("printPdf")}
         </button>
       </div>
       <article className="report-prose" onClick={handleCitationClick}>

@@ -168,7 +168,7 @@ export function getClientSessionId(): string | undefined {
 export async function getResearchPreferences(): Promise<ResearchPreferences> {
   if (MOCK) return DEFAULT_RESEARCH_PREFERENCES;
   const res = await fetch(`${API_BASE}/api/memory/preferences`);
-  if (!res.ok) throw new Error(`读取研究偏好失败: ${await res.text()}`);
+  if (!res.ok) throw new Error(`Could not load research preferences: ${await res.text()}`);
   return res.json();
 }
 
@@ -182,7 +182,7 @@ export async function saveResearchPreferences(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ preferences, session_id: sessionId || null }),
   });
-  if (!res.ok) throw new Error(`保存研究偏好失败: ${await res.text()}`);
+  if (!res.ok) throw new Error(`Could not save research preferences: ${await res.text()}`);
   return res.json();
 }
 

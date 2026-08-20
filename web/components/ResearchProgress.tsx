@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { startResearch, type ResearchEvent } from "@/lib/api";
 import StreamingText from "@/components/StreamingText";
+import { type Translate, useLanguage } from "@/lib/i18n";
 
 type Verdict = "approved" | "retry" | "replan";
 
@@ -56,6 +57,7 @@ export default function ResearchProgress({
   brief: string;
   onReport: (report: string, stats: ResearchStats | null) => void;
 }) {
+  const { t } = useLanguage();
   const [nodes, setNodes] = useState<TimelineNode[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [expandedSet, setExpandedSet] = useState<Set<number>>(new Set());
@@ -294,7 +296,7 @@ export default function ResearchProgress({
       {/* AssistantMsg header */}
       <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase text-muted-foreground">
         <span className="w-1.5 h-1.5 rounded-full bg-foreground/70" />
-        Assistant
+        {t("assistant")}
       </div>
 
       {/* Timeline */}
@@ -306,7 +308,7 @@ export default function ResearchProgress({
           <div className="relative pb-4 bubble-enter">
             <TimelineDot active />
             <NodeBubble>
-              <StreamingText text="正在规划研究方案" mode="dots" />
+              <StreamingText text={t("planning")} mode="dots" />
             </NodeBubble>
           </div>
         )}
@@ -322,15 +324,15 @@ export default function ResearchProgress({
                 <NodeBubble>
                   <div className="flex items-center gap-1.5">
                     {node.done ? (
-                      <StatusLabel dot="bg-approved" text="已完成" color="text-approved" />
+                      <StatusLabel dot="bg-approved" text={t("completed")} color="text-approved" />
                     ) : (
                       <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-dot" />
                     )}
-                    <span className="text-[14px] font-medium">{nodeLabel(node)}</span>
+                    <span className="text-[14px] font-medium">{nodeLabel(node, false, t)}</span>
                   </div>
                   {!node.done && (
                     <div className="mt-2">
-                      <StreamingText text="正在撰写研究报告" mode="dots" />
+                      <StreamingText text={t("writingReport")} mode="dots" />
                     </div>
                   )}
                 </NodeBubble>
@@ -365,10 +367,10 @@ export default function ResearchProgress({
                       <path d="M4.5 2.5l4 3.5-4 3.5" />
                     </svg>
                   </button>
-                  <span className="text-[14px] font-medium">{nodeLabel(node, isRetry)}</span>
+                  <span className="text-[14px] font-medium">{nodeLabel(node, isRetry, t)}</span>
                   {!isExpanded && (
                     <span className="text-[12px] text-muted-foreground/60 ml-0.5">
-                      {nodeSummary(node)}
+                      {nodeSummary(node, t)}
                     </span>
                   )}
                 </div>
@@ -395,6 +397,7 @@ export default function ResearchProgress({
                         }
                         questionLabels={questionLabels}
                         expandedSubs={expandedSubs}
+                        t={t}
                         toggleSub={(key) =>
                           setExpandedSubs((prev) => {
                             const next = new Set(prev);
@@ -417,7 +420,7 @@ export default function ResearchProgress({
           <div className="relative pb-4 bubble-enter">
             <TimelineDot active />
             <NodeBubble>
-              <StreamingText text="正在启动研究" mode="dots" />
+              <StreamingText text={t("startingResearch")} mode="dots" />
             </NodeBubble>
           </div>
         )}
@@ -429,7 +432,7 @@ export default function ResearchProgress({
             <NodeBubble>
               <div className="flex items-center gap-1.5">
                 <span className="text-[14px] font-medium inline-flex items-center gap-2">
-                  审查中
+                  {t("reviewing")}
                   <span className="dots-pulse"><i /><i /><i /></span>
                 </span>
               </div>
@@ -440,7 +443,7 @@ export default function ResearchProgress({
                       <div className="flex items-center gap-1.5">
                         <StatusLabel
                           dot="bg-blue animate-pulse-dot"
-                          text="审查中"
+                          text={t("reviewing")}
                           color="text-blue"
                         />
                         <span className="text-[14px] font-medium">
@@ -448,7 +451,7 @@ export default function ResearchProgress({
                         </span>
                       </div>
                       <p className="mt-1 ml-5 shimmer-text text-[13px]">
-                        正在审查研究质量
+                        {t("reviewingQuality")}
                       </p>
                     </li>
                   ))}
@@ -463,7 +466,7 @@ export default function ResearchProgress({
           <div className="relative pb-4 bubble-enter">
             <TimelineDot active />
             <NodeBubble>
-              <StreamingText text="正在重新规划研究方案" mode="dots" />
+              <StreamingText text={t("replanning")} mode="dots" />
             </NodeBubble>
           </div>
         )}
@@ -505,14 +508,14 @@ function NodeBubble({ children }: { children: React.ReactNode }) {
   );
 }
 
-function nodeLabel(node: TimelineNode, isRetry = false): React.ReactNode {
+function nodeLabel(node: TimelineNode, isRetry: boolean, t: Translate): React.ReactNode {
   switch (node.kind) {
     case "navigator":
-      return `共分解出 ${node.sub_questions.length} 个子问题`;
+      return t("subQuestions", { count: node.sub_questions.length });
     case "diver": {
       const total = node.sub_questions.length;
       const done = node.completed.size;
-      const phase = isRetry ? "补充研究" : "资料收集";
+      const phase = isRetry ? t("supplementaryResearch") : t("evidenceCollection");
       if (done === 0) {
         return (
           <span className="inline-flex items-center gap-2">
@@ -524,33 +527,33 @@ function nodeLabel(node: TimelineNode, isRetry = false): React.ReactNode {
       if (done < total) {
         return (
           <span className="inline-flex items-center gap-2">
-            {phase}（{done}/{total}）
+            {t("phaseProgress", { phase, done, total })}
             <span className="dots-pulse"><i /><i /><i /></span>
           </span>
         );
       }
-      return `${phase}完成（${total}/${total}）`;
+      return t("phaseCompleted", { phase, total });
     }
     case "sonar":
-      return `审查 · 第 ${node.round} 轮`;
+      return t("reviewRound", { round: node.round });
     case "synthesizer":
-      return node.done ? "报告已生成" : "生成报告";
+      return node.done ? t("reportReady") : t("generateReport");
   }
 }
 
-function nodeSummary(node: TimelineNode): string {
+function nodeSummary(node: TimelineNode, t: Translate): string {
   switch (node.kind) {
     case "navigator":
-      return `${node.sub_questions.length} 个子问题`;
+      return t("subQuestionCount", { count: node.sub_questions.length });
     case "diver":
-      return `${node.completed.size}/${node.sub_questions.length} 完成`;
+      return t("completeProgress", { done: node.completed.size, total: node.sub_questions.length });
     case "sonar": {
       const approved = node.results.filter((r) => r.verdict === "approved").length;
-      if (approved === node.results.length) return "全部通过";
-      return `${approved}/${node.results.length} 通过`;
+      if (approved === node.results.length) return t("allApproved");
+      return t("approvedProgress", { done: approved, total: node.results.length });
     }
     case "synthesizer":
-      return node.done ? "已完成" : "进行中";
+      return node.done ? t("completed") : t("inProgress");
   }
 }
 
@@ -566,6 +569,7 @@ function NodeContent({
   questionLabels,
   expandedSubs,
   toggleSub,
+  t,
 }: {
   node: TimelineNode;
   index: number;
@@ -573,6 +577,7 @@ function NodeContent({
   questionLabels: Map<string, string>;
   expandedSubs: Set<string>;
   toggleSub: (key: string) => void;
+  t: Translate;
 }) {
   switch (node.kind) {
     case "navigator":
@@ -596,7 +601,7 @@ function NodeContent({
           {node.sub_questions.map((sq, i) => {
             const entry = node.completed.get(sq.question);
             const isDone = entry !== undefined;
-            const toolUsage = entry ? formatToolUsage(entry.tool_call_counts) : null;
+            const toolUsage = entry ? formatToolUsage(entry.tool_call_counts, t) : null;
             const subKey = `${index}-${i}`;
             // current round: expanded unless explicitly collapsed
             // old round: collapsed unless explicitly expanded
@@ -624,7 +629,7 @@ function NodeContent({
                   </svg>
                   <StatusLabel
                     dot={isDone ? "bg-approved" : "bg-accent animate-pulse-dot"}
-                    text={isDone ? "已完成" : "研究中"}
+                    text={isDone ? t("completed") : t("researching")}
                     color={isDone ? "text-approved" : "text-accent"}
                   />
                   <span className="text-[14px] font-medium">{sq.label}</span>
@@ -682,12 +687,12 @@ function NodeContent({
                     >
                       <path d="M5 2.5l3 3.5-3 3.5" />
                     </svg>
-                    <VerdictLabel verdict={r.verdict} failed={r.failed} />
+                    <VerdictLabel verdict={r.verdict} failed={r.failed} t={t} />
                     <span className="text-[14px] font-medium">{label}</span>
                   </button>
                   {isExpanded && (
                     <div className="mt-1.5 ml-5">
-                      <CriteriaRow failed={r.failed} evidence={r.evidence} />
+                      <CriteriaRow failed={r.failed} evidence={r.evidence} t={t} />
                     </div>
                   )}
                 </li>
@@ -697,7 +702,7 @@ function NodeContent({
           {node.missing_dimensions && (
             <div className="mt-3 pt-2.5 border-t border-foreground/8">
               <p className="text-[12px] text-retry leading-snug">
-                <span className="font-medium">缺失维度</span>
+                <span className="font-medium">{t("missingDimensions")}</span>
                 <span className="mx-1">·</span>
                 {node.missing_dimensions}
               </p>
@@ -708,7 +713,7 @@ function NodeContent({
     }
 
     case "synthesizer":
-      return node.done ? null : <StreamingText text="正在撰写研究报告" mode="dots" />;
+      return node.done ? null : <StreamingText text={t("writingReport")} mode="dots" />;
   }
 }
 
@@ -721,35 +726,40 @@ function StatusLabel({ dot, text, color }: { dot: string; text: string; color: s
   );
 }
 
-function VerdictLabel({ verdict, failed }: { verdict: Verdict; failed?: Record<string, boolean> }) {
+function VerdictLabel({ verdict, failed, t }: { verdict: Verdict; failed?: Record<string, boolean>; t: Translate }) {
   const config = {
-    approved: { dot: "bg-approved", text: "通过", color: "text-approved" },
-    retry: { dot: "bg-retry animate-pulse-dot", text: "重试", color: "text-retry" },
-    replan: { dot: "bg-error", text: "重规划", color: "text-error" },
+    approved: { dot: "bg-approved", text: t("approved"), color: "text-approved" },
+    retry: { dot: "bg-retry animate-pulse-dot", text: t("retry"), color: "text-retry" },
+    replan: { dot: "bg-error", text: t("replan"), color: "text-error" },
   };
   const c = config[verdict];
   let label = c.text;
   if (verdict !== "approved" && failed) {
     const failedNames = Object.entries(failed)
       .filter(([, v]) => v)
-      .map(([k]) => CRITERIA_LABELS[k] || k);
+      .map(([k]) => criteriaLabel(k, t));
     if (failedNames.length > 0) {
-      label += ` · ${failedNames.join("、")}`;
+      label += ` · ${failedNames.join(" · ")}`;
     }
   }
   return <StatusLabel dot={c.dot} text={label} color={c.color} />;
 }
 
-const CRITERIA_LABELS: Record<string, string> = {
-  relevance: "相关性",
-  depth: "深度",
-  citations: "引用",
-  sources: "来源",
-  completeness: "完整性",
+const CRITERIA_LABEL_KEYS: Record<string, "relevance" | "depth" | "citations" | "sources" | "completeness"> = {
+  relevance: "relevance",
+  depth: "depth",
+  citations: "citations",
+  sources: "sources",
+  completeness: "completeness",
 };
 
-function CriteriaRow({ failed, evidence }: { failed: Record<string, boolean>; evidence?: Record<string, string> }) {
-  const entries = Object.entries(CRITERIA_LABELS);
+function criteriaLabel(key: string, t: Translate): string {
+  const translation = CRITERIA_LABEL_KEYS[key];
+  return translation ? t(translation) : key;
+}
+
+function CriteriaRow({ failed, evidence, t }: { failed: Record<string, boolean>; evidence?: Record<string, string>; t: Translate }) {
+  const entries = Object.keys(CRITERIA_LABEL_KEYS).map((key) => [key, criteriaLabel(key, t)] as const);
   const failedEntries = entries.filter(([key]) => failed[key]);
   const passedEntries = entries.filter(([key]) => !failed[key]);
 
@@ -781,32 +791,33 @@ function CriteriaRow({ failed, evidence }: { failed: Record<string, boolean>; ev
   );
 }
 
-const TOOL_NAMES: Record<string, string> = {
-  "mcp__brave-search__brave_web_search": "Brave 搜索",
-  "mcp__tavily__tavily_search": "Tavily 搜索",
-  "mcp__fetch__fetch": "抓取网页",
-  "mcp__paper-search__search_arxiv": "arXiv 搜索",
-  "mcp__paper-search__search_google_scholar": "Google Scholar",
-  "mcp__paper-search__download_arxiv": "下载论文",
-  "mcp__paper-search__read_arxiv_paper": "读取论文",
-  "mcp__pdf-reader__read_pdf": "PDF 读取与证据提取",
-  "mcp__pdf-reader__search_pdf": "PDF 内容检索",
-  "mcp__pdf-reader__pdf_evidence": "PDF 页面证据",
-  "mcp__github__search_repositories": "GitHub 搜索",
-  "mcp__github__get_file_contents": "GitHub 文件",
-  "mcp__github__search_code": "GitHub 代码",
-  "search": "搜索",
-  "read_arxiv_paper": "论文阅读",
-  "rag_search": "本地知识库",
+const TOOL_NAME_KEYS: Record<string, "toolBrave" | "toolTavily" | "toolFetch" | "toolArxivSearch" | "toolGoogleScholar" | "toolPaperDownload" | "toolPaperRead" | "toolPdfRead" | "toolPdfSearch" | "toolPdfEvidence" | "toolGithubSearch" | "toolGithubFile" | "toolGithubCode" | "toolSearch" | "toolRag"> = {
+  "mcp__brave-search__brave_web_search": "toolBrave",
+  "mcp__tavily__tavily_search": "toolTavily",
+  "mcp__fetch__fetch": "toolFetch",
+  "mcp__paper-search__search_arxiv": "toolArxivSearch",
+  "mcp__paper-search__search_google_scholar": "toolGoogleScholar",
+  "mcp__paper-search__download_arxiv": "toolPaperDownload",
+  "mcp__paper-search__read_arxiv_paper": "toolPaperRead",
+  "mcp__pdf-reader__read_pdf": "toolPdfRead",
+  "mcp__pdf-reader__search_pdf": "toolPdfSearch",
+  "mcp__pdf-reader__pdf_evidence": "toolPdfEvidence",
+  "mcp__github__search_repositories": "toolGithubSearch",
+  "mcp__github__get_file_contents": "toolGithubFile",
+  "mcp__github__search_code": "toolGithubCode",
+  "search": "toolSearch",
+  "read_arxiv_paper": "toolPaperRead",
+  "rag_search": "toolRag",
 };
 
-function formatToolUsage(tool_call_counts: Record<string, number>): string | null {
+function formatToolUsage(tool_call_counts: Record<string, number>, t: Translate): string | null {
   const parts = Object.entries(tool_call_counts)
     .filter(([, count]) => count > 0)
     .map(([name, count]) => {
-      const label = TOOL_NAMES[name] || name;
+      const translation = TOOL_NAME_KEYS[name];
+      const label = translation ? t(translation) : name;
       return count > 1 ? `${label} ×${count}` : label;
     });
   if (parts.length === 0) return null;
-  return "调用了 " + parts.join("、");
+  return t("toolUsage", { tools: parts.join(" · ") });
 }
