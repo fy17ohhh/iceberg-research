@@ -38,7 +38,7 @@ Synthesizer # write the final grounded report
 Iceberg Research exposes one startup command. The launcher manages the uv environment, frontend dependencies, optional MCP checks, service health checks, and process cleanup.
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/fy17ohhh/iceberg-research.git
 cd iceberg-research
 cp .env.example .env
 # Add your API keys to .env
