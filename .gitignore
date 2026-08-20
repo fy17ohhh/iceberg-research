@@ -1,0 +1,28 @@
+# Local secrets
+/.env
+
+# Python environment and generated files
+/.venv/
+/.pytest_cache/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Next.js dependencies and build output
+/web/node_modules/
+/web/.next/
+/web/tsconfig.tsbuildinfo
+
+# Runtime logs and benchmark runs
+logs/
+/benchmark/
+
+# Local documents, indexes, caches, and research memory
+/data/*
+!/data/.gitkeep
+!/data/downloads/
+/data/downloads/*
+!/data/downloads/.gitkeep
+!/data/rag/
+/data/rag/*
+!/data/rag/.gitkeep
