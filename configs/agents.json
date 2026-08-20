@@ -1,0 +1,27 @@
+{
+    "router": {
+      "allowed_tools": []
+    },
+    "navigator": {
+      "allowed_tools": []
+    },
+    "diver": {
+      "allowed_tools": [
+        "search",
+        "mcp__fetch__fetch",
+        "mcp__medium-reader__read_medium_post",
+        "mcp__paper-search__search_arxiv",
+        "mcp__paper-search__search_google_scholar",
+        "read_arxiv_paper",
+        "mcp__github__search_repositories",
+        "mcp__github__search_code",
+        "rag_search"
+      ]
+    },
+    "sonar": {
+      "allowed_tools": []
+    },
+    "synthesizer": {
+      "allowed_tools": []
+    }
+  }
