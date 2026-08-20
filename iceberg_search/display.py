@@ -7,7 +7,7 @@ import time
 
 from .agents.sonar_models import ReviewResult
 
-logger = logging.getLogger("iceberg_research.display")
+logger = logging.getLogger("iceberg_search.display")
 
 
 def _log(msg: str):

@@ -1,6 +1,6 @@
 import pytest
 
-from iceberg_research.library import converter
+from iceberg_search.library import converter
 
 
 class FakePage:

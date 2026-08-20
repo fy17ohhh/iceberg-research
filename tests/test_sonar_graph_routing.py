@@ -1,10 +1,10 @@
-from iceberg_research.agents.planning_models import SubQuestion
-from iceberg_research.agents.sonar_models import (
+from iceberg_search.agents.planning_models import SubQuestion
+from iceberg_search.agents.sonar_models import (
     CriterionReview,
     NoteReview,
     ReviewResult,
 )
-from iceberg_research.graph.graph_builder import build_graph
+from iceberg_search.graph.graph_builder import build_graph
 
 
 def _criterion(passed=True, evidence="ok"):

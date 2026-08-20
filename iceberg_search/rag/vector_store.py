@@ -25,7 +25,7 @@ load_dotenv()
 class VectorStore:
     """Persistent hybrid store: Qdrant dense vectors + SQLite FTS5/BM25."""
 
-    COLLECTION_NAME = "iceberg_research_chunks"
+    COLLECTION_NAME = "iceberg_search_chunks"
     _POINT_NAMESPACE = uuid.UUID("d619b128-f924-41d8-943e-9e4c40e04054")
 
     def __init__(

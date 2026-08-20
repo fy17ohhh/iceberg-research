@@ -1,4 +1,4 @@
-# Iceberg Research
+# Iceberg Search
 
 > Research beyond the surface.
 
@@ -6,7 +6,7 @@
 
 ![home_page](assets/home_page.png)
 
-Iceberg Research is multi-agent deep research project that turns a vague question into a grounded, cited research report. It clarifies the user brief, plans investigation steps, searches across web and papers, checks evidence quality, and synthesizes a final markdown report with citations and source traceability. The central design follows an **"underwater research workflow"**: the visible result is the final report, while the deeper work happens in planning, retrieval, evidence verification, and synthesis.
+Iceberg Search is multi-agent deep research project that turns a vague question into a grounded, cited research report. It clarifies the user brief, plans investigation steps, searches across web and papers, checks evidence quality, and synthesizes a final markdown report with citations and source traceability. The central design follows an **"underwater research workflow"**: the visible result is the final report, while the deeper work happens in planning, retrieval, evidence verification, and synthesis.
 
 ## 🤖 Agent Workflow
 
@@ -39,11 +39,11 @@ Synthesizer # write the final grounded report
 
 ## 🚀 Quick start
 
-Iceberg Research exposes one startup command. The launcher manages the uv environment, frontend dependencies, optional MCP checks, service health checks, and process cleanup.
+Iceberg Search exposes one startup command. The launcher manages the uv environment, frontend dependencies, optional MCP checks, service health checks, and process cleanup.
 
 ```bash
-git clone https://github.com/fy17ohhh/iceberg-research.git
-cd iceberg-research
+git clone https://github.com/fy17ohhh/iceberg-search.git
+cd iceberg-search
 cp .env.example .env
 # Add your API keys to .env
 
@@ -64,13 +64,13 @@ You can also skip the mode selection and enters directly by `./setup.sh web` and
 ### Run a research query
 
 ```bash
-uv run iceberg-research "What are the trade-offs between RAG and agentic search for enterprise knowledge work?"
+uv run iceberg-search "What are the trade-offs between RAG and agentic search for enterprise knowledge work?"
 ```
 
 Optional flags:
 
 ```bash
-uv run iceberg-research "..." --model deepseek-v3 --max-rounds 3 --max-steps 4 --timeout 180
+uv run iceberg-search "..." --model deepseek-v3 --max-rounds 3 --max-steps 4 --timeout 180
 ```
 
 Add a local PDF or arXiv paper:
@@ -137,7 +137,7 @@ EMBEDDING_BASE_URL="https://open.bigmodel.cn/api/paas/v4/"
 
 QDRANT_URL=
 QDRANT_API_KEY=
-QDRANT_COLLECTION=iceberg_research
+QDRANT_COLLECTION=iceberg_search
 ```
 
 Notes:

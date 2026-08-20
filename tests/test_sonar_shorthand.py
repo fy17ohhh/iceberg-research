@@ -1,4 +1,4 @@
-from iceberg_research.agents.sonar_models import NoteReview
+from iceberg_search.agents.sonar_models import NoteReview
 
 def test_note_review_normalizes_shorthand_criterion_statuses():
     review = NoteReview(

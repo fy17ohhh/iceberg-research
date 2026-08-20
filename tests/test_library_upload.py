@@ -6,8 +6,8 @@ import pytest
 from fastapi import HTTPException, UploadFile
 from starlette.requests import Request
 
-from iceberg_research.api.app import upload_file
-from iceberg_research.api.schemas import IngestResult
+from iceberg_search.api.app import upload_file
+from iceberg_search.api.schemas import IngestResult
 
 
 class FakeLibraryManager:

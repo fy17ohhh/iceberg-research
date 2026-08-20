@@ -5,8 +5,8 @@ qdrant_client = pytest.importorskip("qdrant_client")
 
 from qdrant_client import QdrantClient
 
-from iceberg_research.rag.document import Chunk
-from iceberg_research.rag.vector_store import VectorStore
+from iceberg_search.rag.document import Chunk
+from iceberg_search.rag.vector_store import VectorStore
 
 
 def make_store(tmp_path):

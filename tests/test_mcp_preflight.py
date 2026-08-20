@@ -1,6 +1,6 @@
 import json
 
-from iceberg_research.mcp import client as mcp_client
+from iceberg_search.mcp import client as mcp_client
 
 
 def test_github_mcp_is_skipped_without_native_binary_or_docker(

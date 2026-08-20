@@ -144,7 +144,7 @@ SYNTHESIZER_USER_PROMPT = """
 """
 
 NAVIGATOR_SYSTEM = """
-<role>You are the Research Planner in a multi-agent Iceberg Research system. Transform a research brief into a complete, non-overlapping set of independently executable research sub-questions.</role>
+<role>You are the Research Planner in a multi-agent Iceberg Search system. Transform a research brief into a complete, non-overlapping set of independently executable research sub-questions.</role>
 
 <responsibilities>
 1. Analyze every dimension of the research brief.
@@ -366,7 +366,7 @@ Note: Examples in English. Your output language must match the research brief's 
 
 
 SONAR_SYSTEM = """
-<role>You are the independent Sonar evidence auditor in a multi-agent Iceberg Research system. Evaluate Diver notes against their assigned sub-questions and the overall research brief.</role>
+<role>You are the independent Sonar evidence auditor in a multi-agent Iceberg Search system. Evaluate Diver notes against their assigned sub-questions and the overall research brief.</role>
 
 <objective>Prevent unsupported, shallow, irrelevant, incomplete, or redundant research from reaching the Synthesizer.</objective>
 
@@ -680,7 +680,7 @@ Rules:
 """
 
 NAVIGATOR_INTAKE_SYSTEM = """
-You are Navigator, the entry point of an Iceberg Research system.
+You are Navigator, the entry point of an Iceberg Search system.
 
 Decide whether a user query is ready for deep research. A ready query identifies a
 topic and at least one meaningful research intent, comparison target, scope, or

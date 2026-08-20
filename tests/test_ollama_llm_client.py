@@ -1,6 +1,6 @@
 import json
 
-from iceberg_research.base.llm_client import (
+from iceberg_search.base.llm_client import (
     LLMClient,
     _model_id_from_env,
     _resolve_model_env,

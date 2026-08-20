@@ -1,6 +1,6 @@
 import json
 
-from iceberg_research.agents.diver import (
+from iceberg_search.agents.diver import (
     FETCH_TOOL,
     MEDIUM_READER_TOOL,
     Diver,

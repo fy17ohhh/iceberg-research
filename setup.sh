@@ -80,7 +80,7 @@ fi
 step 2 "Synchronizing the Python habitat"
 [ -f uv.lock ] || fail "uv.lock is missing; restore it before launching the application"
 uv sync --frozen
-uv run --no-sync python -c 'import fastapi, uvicorn, pydantic, langgraph, mcp, iceberg_research'
+uv run --no-sync python -c 'import fastapi, uvicorn, pydantic, langgraph, mcp, iceberg_search'
 ok "Project environment is locked, synced, and verified"
 
 step 3 "Loading mission credentials"
@@ -124,7 +124,7 @@ else
 fi
 
 step 7 "Running preflight checks"
-uv run --no-sync python -m compileall -q iceberg_research
+uv run --no-sync python -m compileall -q iceberg_search
 ok "Backend modules compile successfully"
 ok "Unavailable optional MCP servers will degrade gracefully"
 

@@ -1,4 +1,4 @@
-"""Terminal client for the Iceberg Research HTTP/SSE API."""
+"""Terminal client for the Iceberg Search HTTP/SSE API."""
 
 from __future__ import annotations
 
@@ -192,12 +192,12 @@ def run_search_session(session_id: str) -> bool:
 
 def main() -> int:
     global LANGUAGE
-    parser = argparse.ArgumentParser(description="Iceberg Research terminal interface")
+    parser = argparse.ArgumentParser(description="Iceberg Search terminal interface")
     parser.add_argument("--lang", choices=("en", "zh-CN"), default=LANGUAGE, help="Display language (default: en)")
     args = parser.parse_args()
     LANGUAGE = args.lang
     print(f"{ICE}╭──────────────────────────────────────────╮")
-    print("│       ICEBERG RESEARCH // TERMINAL       │")
+    print("│        ICEBERG SEARCH // TERMINAL        │")
     print(f"│  {tr('banner_subtitle'):^40}│")
     print(f"╰──────────────────────────────────────────╯{RESET}")
     print(f"{DIM}{tr('quit_hint')}{RESET}")

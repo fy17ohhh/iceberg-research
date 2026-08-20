@@ -32,7 +32,7 @@ function HomeContent() {
   useEffect(() => {
     if (!hasActiveSearch) return;
 
-    const guardState = { ...window.history.state, icebergResearchGuard: true };
+    const guardState = { ...window.history.state, icebergSearchGuard: true };
     window.history.pushState(guardState, "", window.location.href);
 
     const handleBrowserBack = () => {
@@ -195,7 +195,7 @@ function HeroSection({ onSubmit, sending }: { onSubmit: (q: string) => void; sen
   return (
     <div className={`hero-layout flex flex-1 w-full items-center justify-center ${sending ? "hero-exit" : ""}`}>
       <section className="hero-console hero-console-minimal">
-        <h1 className="hero-title hero-title-minimal">iceberg-research</h1>
+        <h1 className="hero-title hero-title-minimal">iceberg-search</h1>
         <QueryInput onSubmit={onSubmit} disabled={sending} />
       </section>
     </div>

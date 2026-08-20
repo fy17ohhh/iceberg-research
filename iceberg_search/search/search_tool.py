@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import logging
 from typing import Any
-from iceberg_research.mcp.tool_adapter import MCPTool
-from iceberg_research.tools import (
+from iceberg_search.mcp.tool_adapter import MCPTool
+from iceberg_search.tools import (
     BaseTool,
     ToolCallError,
     ToolErrorCategory,

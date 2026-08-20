@@ -6,7 +6,7 @@ from openai.types.chat.chat_completion_message_tool_call import (
     Function,
 )
 
-from iceberg_research.agents.navigator import Navigator
+from iceberg_search.agents.navigator import Navigator
 
 
 class FakeLLM:

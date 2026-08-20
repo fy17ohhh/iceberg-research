@@ -7,17 +7,17 @@ from typing import Annotated, Callable, TypedDict
 from langgraph.graph import END, START, StateGraph
 from langgraph.types import Send
 
-from iceberg_research.agents import Diver, Sonar, Navigator, Synthesizer
-from iceberg_research.agents.planning_models import SubQuestion
-from iceberg_research.agents.sonar_models import (
+from iceberg_search.agents import Diver, Sonar, Navigator, Synthesizer
+from iceberg_search.agents.planning_models import SubQuestion
+from iceberg_search.agents.sonar_models import (
     CriterionReview,
     NoteReview,
     ReviewItem,
     ReviewResult,
 )
-from iceberg_research.base import LLMClient
-from iceberg_research.memory import MemoryManager
-from iceberg_research.rag.pipeline import Pipeline
+from iceberg_search.base import LLMClient
+from iceberg_search.memory import MemoryManager
+from iceberg_search.rag.pipeline import Pipeline
 
 
 logger = logging.getLogger(__name__)

@@ -2,8 +2,8 @@ from typing import Any
 
 import pytest
 
-from iceberg_research.agents.diver import Diver
-from iceberg_research.tools import (
+from iceberg_search.agents.diver import Diver
+from iceberg_search.tools import (
     BaseTool,
     ToolCallError,
     ToolErrorCategory,
@@ -96,7 +96,7 @@ def _bare_diver() -> Diver:
 def test_retries_transient_errors_with_backoff(monkeypatch):
     sleeps = []
     monkeypatch.setattr(
-        "iceberg_research.agents.diver.time.sleep",
+        "iceberg_search.agents.diver.time.sleep",
         lambda delay: sleeps.append(delay),
     )
     tool = SequenceTool(
@@ -117,7 +117,7 @@ def test_retries_transient_errors_with_backoff(monkeypatch):
 def test_does_not_retry_robots_denial(monkeypatch):
     sleeps = []
     monkeypatch.setattr(
-        "iceberg_research.agents.diver.time.sleep",
+        "iceberg_search.agents.diver.time.sleep",
         lambda delay: sleeps.append(delay),
     )
     tool = SequenceTool(

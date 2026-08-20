@@ -3,8 +3,8 @@ import re
 
 from openai.types.chat import ChatCompletionMessage
 
-from iceberg_research.agents.sonar import Sonar
-from iceberg_research.agents.sonar_models import (
+from iceberg_search.agents.sonar import Sonar
+from iceberg_search.agents.sonar_models import (
     CriterionReview,
     NoteReview,
     ReviewItem,

@@ -2,11 +2,11 @@ import json
 
 from openai.types.chat import ChatCompletionMessage
 
-from iceberg_research.agents.sonar_models import (
+from iceberg_search.agents.sonar_models import (
     CoverageGap,
     ReviewResult,
 )
-from iceberg_research.agents.navigator import Navigator
+from iceberg_search.agents.navigator import Navigator
 
 
 class FakeContextBuilder:

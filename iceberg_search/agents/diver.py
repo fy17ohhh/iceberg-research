@@ -7,7 +7,7 @@ import time
 import uuid
 from urllib.parse import urlparse
 
-from iceberg_research.tools.base_tool import BaseTool, ToolCallError
+from iceberg_search.tools.base_tool import BaseTool, ToolCallError
 from ..base import AgentBase, llm_client, Message
 from ..context import ContextBuilder
 from .prompts import (

@@ -53,7 +53,7 @@ const messages = {
     quantitativeDescription: "Metrics, data, dates, and experimental results",
     researchBackground: "Long-term research context",
     contextDescription: "Add your goals, research interests, or background. Do not include API keys, passwords, or other credentials.",
-    contextPlaceholder: "For example: I am building an Iceberg Research Agent and preparing for agent-algorithm roles. Focus on method design, evaluation, and reliability.",
+    contextPlaceholder: "For example: I am building an Iceberg Search Agent and preparing for agent-algorithm roles. Focus on method design, evaluation, and reliability.",
     memoryDescription: "Completed research extracts a small set of sourced atomic facts. Only facts relevant to the current question are recalled; full history is never placed in context.",
     savingPreferences: "Saving preferences…",
     preferencesSaved: "Saved",
@@ -170,7 +170,7 @@ const messages = {
     quantitativeDescription: "指标、数据、日期和实验结果",
     researchBackground: "长期研究背景",
     contextDescription: "填写长期目标、研究方向或知识背景。不要填写 API Key、密码等凭证。",
-    contextPlaceholder: "例如：我正在研究 Iceberg Research Agent，并准备 Agent 算法岗位，希望重点关注方法设计、评测和可靠性。",
+    contextPlaceholder: "例如：我正在研究 Iceberg Search Agent，并准备 Agent 算法岗位，希望重点关注方法设计、评测和可靠性。",
     memoryDescription: "完成的研究会自动提取少量、带来源的原子事实。系统只按当前问题召回相关记忆，不会把全部历史塞进上下文。",
     savingPreferences: "正在保存偏好…",
     preferencesSaved: "已保存",
@@ -254,12 +254,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocale] = useState<AppLocale>("en");
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("iceberg-research-locale");
+    const saved = window.localStorage.getItem("iceberg-search-locale");
     if (saved === "en" || saved === "zh-CN") setLocale(saved);
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("iceberg-research-locale", locale);
+    window.localStorage.setItem("iceberg-search-locale", locale);
     document.documentElement.lang = locale;
   }, [locale]);
 

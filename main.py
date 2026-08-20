@@ -1,18 +1,18 @@
 import argparse
 import logging
 
-from iceberg_research.base import setup_logging
-from iceberg_research.agents import Navigator
-from iceberg_research.config import Config
-from iceberg_research.orchestrator import Orchestrator
-from iceberg_research.display import stream_events
+from iceberg_search.base import setup_logging
+from iceberg_search.agents import Navigator
+from iceberg_search.config import Config
+from iceberg_search.orchestrator import Orchestrator
+from iceberg_search.display import stream_events
 
-logger = logging.getLogger("iceberg_research.main")
-display = logging.getLogger("iceberg_research.display")
+logger = logging.getLogger("iceberg_search.main")
+display = logging.getLogger("iceberg_search.display")
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Iceberg Research: 自主多 Agent 研究系统")
+    parser = argparse.ArgumentParser(description="Iceberg Search: 自主多 Agent 研究系统")
     parser.add_argument("query", nargs="?", default=None, help="研究问题（不提供则交互输入）")
     parser.add_argument("--model", default=None, help="LLM 模型名称")
     parser.add_argument("--max-rounds", type=int, default=None, help="最大审查轮数")

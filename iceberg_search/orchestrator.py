@@ -2,18 +2,18 @@ from __future__ import annotations
 
 import os, json, logging
 
-from iceberg_research.agents import Sonar, Navigator, Diver, Synthesizer
-from iceberg_research.base import LLMClient
-from iceberg_research.config import Config
-from iceberg_research.context import HistoryCompactor, TokenCounter, ContextBuilder
-from iceberg_research.graph import build_graph
-from iceberg_research.library import LibraryManager
-from iceberg_research.memory import MemoryManager
-from iceberg_research.mcp import create_mcp_clients, register_mcp_tools
-from iceberg_research.rag import Pipeline
-from iceberg_research.search import SearchTool
-from iceberg_research.tools import ToolRegistry, RAGTool
-from iceberg_research.tools.tool_paper import PaperReaderTool
+from iceberg_search.agents import Sonar, Navigator, Diver, Synthesizer
+from iceberg_search.base import LLMClient
+from iceberg_search.config import Config
+from iceberg_search.context import HistoryCompactor, TokenCounter, ContextBuilder
+from iceberg_search.graph import build_graph
+from iceberg_search.library import LibraryManager
+from iceberg_search.memory import MemoryManager
+from iceberg_search.mcp import create_mcp_clients, register_mcp_tools
+from iceberg_search.rag import Pipeline
+from iceberg_search.search import SearchTool
+from iceberg_search.tools import ToolRegistry, RAGTool
+from iceberg_search.tools.tool_paper import PaperReaderTool
 
 logger = logging.getLogger(__name__)
 

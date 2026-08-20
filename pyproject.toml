@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "iceberg-research"
+name = "iceberg-search"
 version = "0.1.0"
 description = "An agentic deep-research workspace that navigates, dives, verifies, and synthesizes."
 readme = "README.md"
@@ -31,7 +31,7 @@ dependencies = [
 ]
 
 [project.scripts]
-iceberg-research = "main:main"
+iceberg-search = "main:main"
 iceberg-terminal = "terminal_gui:main"
 iceberg-library = "library_cli:main"
 
@@ -44,7 +44,7 @@ dev = [
 py-modules = ["main", "terminal_gui", "library_cli", "server"]
 
 [tool.setuptools.packages.find]
-include = ["iceberg_research*"]
+include = ["iceberg_search*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

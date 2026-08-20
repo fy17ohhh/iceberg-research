@@ -38,9 +38,9 @@ except ImportError:
     qdrant_module.models = models
     sys.modules["qdrant_client"] = qdrant_module
 
-from iceberg_research.rag.document import Chunk
-import iceberg_research.rag.vector_store as vector_store_module
-from iceberg_research.rag.vector_store import VectorStore
+from iceberg_search.rag.document import Chunk
+import iceberg_search.rag.vector_store as vector_store_module
+from iceberg_search.rag.vector_store import VectorStore
 
 vector_store_module.models = models
 

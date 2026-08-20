@@ -885,7 +885,7 @@ wheels = [
 ]
 
 [[package]]
-name = "iceberg-research"
+name = "iceberg-search"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

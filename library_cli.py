@@ -2,8 +2,8 @@ import argparse
 import json
 import os
 
-from iceberg_research.config import Config
-from iceberg_research.orchestrator import Orchestrator
+from iceberg_search.config import Config
+from iceberg_search.orchestrator import Orchestrator
 
 
 def cmd_list(data_dir: str):
@@ -44,7 +44,7 @@ def cmd_delete(config: Config, title: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Iceberg Research 文献库管理")
+    parser = argparse.ArgumentParser(description="Iceberg Search 文献库管理")
     subparsers = parser.add_subparsers(dest="action", required=True)
 
     subparsers.add_parser("list", help="列出所有文献")

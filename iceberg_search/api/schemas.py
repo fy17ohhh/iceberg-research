@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Literal
 from pydantic import BaseModel
-from iceberg_research.memory.models import ResearchPreferences
+from iceberg_search.memory.models import ResearchPreferences
 
 
 class NavigationRequest(BaseModel):

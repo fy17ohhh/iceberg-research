@@ -156,7 +156,7 @@ export const DEFAULT_RESEARCH_PREFERENCES: ResearchPreferences = {
 
 export function getClientSessionId(): string | undefined {
   if (typeof window === "undefined") return undefined;
-  const key = "iceberg-research-session-id";
+  const key = "iceberg-search-session-id";
   let value = window.localStorage.getItem(key);
   if (!value) {
     value = `web_${crypto.randomUUID()}`;

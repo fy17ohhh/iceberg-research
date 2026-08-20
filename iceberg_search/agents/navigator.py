@@ -24,7 +24,7 @@ from .sonar_models import ReviewItem, ReviewResult
 
 
 logger = logging.getLogger(__name__)
-display = logging.getLogger("iceberg_research.display")
+display = logging.getLogger("iceberg_search.display")
 
 _SHORT_AMBIGUOUS_QUERY = re.compile(r"^[A-Za-z][A-Za-z0-9._+-]{0,8}$")
 

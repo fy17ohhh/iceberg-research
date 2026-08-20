@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Iceberg Research",
+  title: "Iceberg Search",
   description: "A multi-agent deep research system.",
 };
 

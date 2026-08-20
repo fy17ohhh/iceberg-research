@@ -11,11 +11,11 @@ from fastapi import FastAPI, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
-from iceberg_research.agents import Navigator
-from iceberg_research.base import LLMClient, setup_logging
-from iceberg_research.config import Config
-from iceberg_research.library.library_manager import LibraryManager
-from iceberg_research.orchestrator import Orchestrator
+from iceberg_search.agents import Navigator
+from iceberg_search.base import LLMClient, setup_logging
+from iceberg_search.config import Config
+from iceberg_search.library.library_manager import LibraryManager
+from iceberg_search.orchestrator import Orchestrator
 from .schemas import (
     NavigationRequest,
     NavigationResult,

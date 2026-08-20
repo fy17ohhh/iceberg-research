@@ -1,4 +1,4 @@
-# Iceberg Research
+# Iceberg Search
 
 > 穿透水面，深入研究。
 
@@ -6,7 +6,7 @@
 
 ![home_page](assets/home_page_zh.png)
 
-Iceberg Research 是一个多智能体深度研究项目，能够将模糊的问题转化为有据可查、带引用的研究报告。它会澄清研究需求、规划调查步骤、搜索网页与论文、检查证据质量，并综合生成带有来源追溯能力的 Markdown 报告。核心设计遵循一套“水下研究工作流”：最终报告浮于水面，而规划、检索、证据验证与综合推理发生在水下。
+Iceberg Search 是一个多智能体深度研究项目，能够将模糊的问题转化为有据可查、带引用的研究报告。它会澄清研究需求、规划调查步骤、搜索网页与论文、检查证据质量，并综合生成带有来源追溯能力的 Markdown 报告。核心设计遵循一套“水下研究工作流”：最终报告浮于水面，而规划、检索、证据验证与综合推理发生在水下。
 
 ## 🤖 智能体工作流
 
@@ -39,11 +39,11 @@ Synthesizer # 撰写基于证据的最终报告
 
 ## 🚀 快速开始
 
-Iceberg Research 对外只提供一个启动命令。启动器会管理 uv 环境、前端依赖、可选 MCP 检查、服务健康检查和进程清理。
+Iceberg Search 对外只提供一个启动命令。启动器会管理 uv 环境、前端依赖、可选 MCP 检查、服务健康检查和进程清理。
 
 ```bash
-git clone https://github.com/fy17ohhh/iceberg-research.git
-cd iceberg-research
+git clone https://github.com/fy17ohhh/iceberg-search.git
+cd iceberg-search
 cp .env.example .env
 # 在 .env 中填写你的 API Key
 
@@ -72,13 +72,13 @@ uv run iceberg-terminal --lang zh-CN
 ### 运行研究问题
 
 ```bash
-uv run iceberg-research "What are the trade-offs between RAG and agentic search for enterprise knowledge work?"
+uv run iceberg-search "What are the trade-offs between RAG and agentic search for enterprise knowledge work?"
 ```
 
 可选参数：
 
 ```bash
-uv run iceberg-research "..." --model deepseek-v3 --max-rounds 3 --max-steps 4 --timeout 180
+uv run iceberg-search "..." --model deepseek-v3 --max-rounds 3 --max-steps 4 --timeout 180
 ```
 
 添加本地 PDF 或 arXiv 论文：
@@ -145,7 +145,7 @@ EMBEDDING_BASE_URL="https://open.bigmodel.cn/api/paas/v4/"
 
 QDRANT_URL=
 QDRANT_API_KEY=
-QDRANT_COLLECTION=iceberg_research
+QDRANT_COLLECTION=iceberg_search
 ```
 
 说明：

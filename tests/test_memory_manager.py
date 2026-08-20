@@ -1,8 +1,8 @@
 import json
 import types
 
-from iceberg_research.memory import MemoryManager, ResearchPreferences
-from iceberg_research.memory.models import (
+from iceberg_search.memory import MemoryManager, ResearchPreferences
+from iceberg_search.memory.models import (
     Evidence,
     MemoryItem,
     MemoryLifecycle,
@@ -88,7 +88,7 @@ def test_preferences_are_individual_files_and_round_trip(tmp_path):
         report_language="zh-CN",
         report_depth="deep",
         include_code_repositories=True,
-        research_context="我正在研究 Iceberg Research Agent 的评测和可靠性。",
+        research_context="我正在研究 Iceberg Search Agent 的评测和可靠性。",
     )
 
     manager.save_preferences(preferences, session_id="session-test")
