@@ -215,6 +215,47 @@ body {
   40% { transform: translateY(-5px); opacity: 1; }
 }
 
+/* Assistant identity — a small submarine cruising alongside an endless signal. */
+.assistant-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 20px;
+  color: var(--muted-foreground);
+}
+.submarine-emoji {
+  display: inline-block;
+  font-size: 17px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 3px rgba(8, 127, 131, .16));
+  transform-origin: 50% 65%;
+  animation: submarine-cruise 2.6s ease-in-out infinite;
+}
+.assistant-status-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 14px;
+}
+.assistant-status-dots i {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--accent);
+  animation: assistant-dot 1.1s ease-in-out infinite;
+}
+.assistant-status-dots i:nth-child(2) { animation-delay: .15s; }
+.assistant-status-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes submarine-cruise {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+  50% { transform: translate(2px, -2px) rotate(2deg); }
+}
+@keyframes assistant-dot {
+  0%, 75%, 100% { transform: translateY(0) scale(.78); opacity: .35; }
+  38% { transform: translateY(-2px) scale(1); opacity: 1; }
+}
+
 /* Text shimmer — loading placeholder */
 @keyframes text-shimmer {
   0% { background-position: 200% 0; }

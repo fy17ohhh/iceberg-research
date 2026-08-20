@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { analyzeNavigation, refineNavigation } from "@/lib/api";
+import AssistantStatus from "@/components/AssistantStatus";
 import StreamingText from "@/components/StreamingText";
 import { useLanguage } from "@/lib/i18n";
 
@@ -332,13 +333,9 @@ function UserBubble({ text }: { text: string }) {
 }
 
 function AssistantMsg({ children }: { children: React.ReactNode }) {
-  const { t } = useLanguage();
   return (
     <div className="flex flex-col gap-1.5 bubble-enter">
-      <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase text-muted-foreground">
-        <span className="w-1.5 h-1.5 rounded-full bg-foreground/70" />
-        {t("assistant")}
-      </div>
+      <AssistantStatus />
       <div>{children}</div>
     </div>
   );
