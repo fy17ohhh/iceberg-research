@@ -1,0 +1,55 @@
+{
+  "brave-search": {
+    "command": "npx",
+    "args": ["-y", "@brave/brave-search-mcp-server"],
+    "env": {
+      "BRAVE_API_KEY": "${BRAVE_API_KEY}",
+      "NODE_OPTIONS": "--use-env-proxy"
+    }
+  },
+  "fetch": {
+    "command": "uvx",
+    "args": ["--with", "mcp<2", "mcp-server-fetch"],
+    "env": {
+      "all_proxy": ""
+    }
+  },
+  "medium-reader": {
+    "command": "mcp-medium-reader",
+    "args": []
+  },
+  "paper-search": {
+    "command": "uv",
+    "args": ["tool", "run", "paper-search-mcp==0.1.4"],
+    "env": {
+      "PAPER_SEARCH_MCP_UNPAYWALL_EMAIL": "${UNPAYWALL_EMAIL}",
+      "PAPER_SEARCH_MCP_CORE_API_KEY": "${CORE_API_KEY}"
+    }
+  },
+  "pdf-reader": {
+    "command": "npx",
+    "args": ["-y", "@sylphx/citra"]
+  },
+  "tavily": {
+    "command": "npx",
+    "args": ["-y", "tavily-mcp@latest"],
+    "env": {
+      "TAVILY_API_KEY": "${TAVILY_API_KEY}",
+      "NODE_OPTIONS": "--use-env-proxy"
+    }
+  },
+  "github": {
+    "command": "docker",
+    "args": [
+      "run",
+      "-i",
+      "--rm",
+      "-e",
+      "GITHUB_PERSONAL_ACCESS_TOKEN",
+      "ghcr.io/github/github-mcp-server"
+    ],
+    "env": {
+      "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+    }
+  }
+}
